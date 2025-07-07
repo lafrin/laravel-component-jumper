@@ -11,7 +11,7 @@ import {
   DocumentLink,
   Range,
 } from "vscode";
-import { nameToIndexPath, nameToPath } from "./utils";
+import { getAllPossiblePaths } from "./utils";
 
 export default class LinkProvider implements DocumentLinkProvider {
   public provideDocumentLinks(
@@ -19,7 +19,7 @@ export default class LinkProvider implements DocumentLinkProvider {
   ): ProviderResult<DocumentLink[]> {
     const documentLinks: DocumentLink[] = [];
 
-    const config = workspace.getConfiguration("laravel_goto_components");
+    const config = workspace.getConfiguration("laravel_component_jumper");
     const workspacePath = workspace.getWorkspaceFolder(doc.uri)?.uri.fsPath;
 
     const reg = new RegExp(config.regex);
@@ -32,14 +32,18 @@ export default class LinkProvider implements DocumentLinkProvider {
 
       if (result !== null) {
         for (let componentName of result) {
-          let componentPath = nameToPath(componentName);
+          const possiblePaths = getAllPossiblePaths(componentName);
           
-          if (!existsSync(workspacePath + componentPath)) {
-            componentPath = nameToIndexPath(componentName);
-            
-            if (!existsSync(workspacePath + componentPath)) {
-              continue;
+          let componentPath: string | null = null;
+          for (const path of possiblePaths) {
+            if (existsSync(workspacePath + path)) {
+              componentPath = path;
+              break;
             }
+          }
+          
+          if (!componentPath) {
+            continue;
           }
           
           let start = new Position(

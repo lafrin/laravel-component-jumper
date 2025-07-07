@@ -9,15 +9,16 @@ import {
   workspace,
   ProviderResult,
 } from "vscode";
-import { nameToIndexPath, nameToPath } from "./utils";
+import { getAllPossiblePaths } from "./utils";
 
 export default class HoverProvider implements BaseHoverProvider {
   public provideHover(
     doc: TextDocument,
     position: Position
   ): ProviderResult<Hover> {
-    const config = workspace.getConfiguration("laravel_goto_components");
+    const config = workspace.getConfiguration("laravel_component_jumper");
     const regex = new RegExp(config.regex);
+    
     const range = doc.getWordRangeAtPosition(position, regex);
 
     if (!range) {
@@ -26,14 +27,19 @@ export default class HoverProvider implements BaseHoverProvider {
 
     const componentName = doc.getText(range);
     const workspacePath = workspace.getWorkspaceFolder(doc.uri)?.uri.fsPath;
-    let componentPath = nameToPath(componentName);
     
-    if (!existsSync(workspacePath + componentPath)) {
-      componentPath = nameToIndexPath(componentName);
-      
-      if (!existsSync(workspacePath + componentPath)) {
-        return;
+    const possiblePaths = getAllPossiblePaths(componentName);
+    
+    let componentPath: string | null = null;
+    for (const path of possiblePaths) {
+      if (existsSync(workspacePath + path)) {
+        componentPath = path;
+        break;
       }
+    }
+    
+    if (!componentPath) {
+      return;
     }
 
     const lookUpUri = `[${componentPath}](${Uri.file(

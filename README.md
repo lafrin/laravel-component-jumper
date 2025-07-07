@@ -1,4 +1,4 @@
-# Laravel-goto-components
+# Laravel Component Jumper
 
 ![Installs](https://img.shields.io/visual-studio-marketplace/i/naoray.laravel-goto-components)
 
@@ -6,3 +6,22 @@
 
 - :rocket: quick jump to components with `CTRL` + `click`
 - :mag: visual highlight of component links in `.blade` files
+- :sparkles: supports configurable component search paths
+- :file_folder: searches in configurable path (default: `/resources/views`)
+- :gear: configurable search path via settings.json
+
+## Configuration
+
+You can customize the component search paths in your VS Code settings:
+
+```json
+{
+  "laravel_component_jumper.searchPath": "/resources/views",
+  "laravel_component_jumper.regex": "(?<=<x-)(?!slot)[a-z.-]+"
+}
+```
+
+### Settings
+
+- `searchPath`: Path to search for components (default: `/resources/views`)
+- `regex`: Custom regex for matching component names (default: `(?<=<x-)(?!slot)[a-z.-]+`)

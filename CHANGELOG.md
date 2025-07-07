@@ -1,16 +1,9 @@
 # Change Log
 
-## [v1.2.0](https://github.com/naoray/laravel-factory-prefill/tree/v1.2.0) (2021-28-10)
+## [v1.0.0](https://github.com/naoray/laravel-component-jumper/tree/v1.0.0) (2024-12-19)
 **Added**
-- support for anynomous component detection
-
-## [v1.1.0](https://github.com/naoray/laravel-factory-prefill/tree/v1.1.0) (2020-12-10)
-
-**Added**
-- quick navigation for nested components like `x-input.button`
-
-## [v1.0.0](https://github.com/naoray/laravel-factory-prefill/tree/v1.0.0) (2020-12-09)
-
-**Added**
-- `CTRL` + `click` to navigate `x-components` in the `components` directory
-- display existing components in `blade.php` files as links
+- quick jump to Laravel components with `CTRL` + `click`
+- visual highlight of component links in `.blade` files
+- configurable component search paths via settings.json
+- support for both traditional Laravel and Laravel 11 directory structures
+- improved component detection for nested components

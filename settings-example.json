@@ -1,0 +1,4 @@
+{
+  "laravel_component_jumper.searchPath": "/resources/views",
+  "laravel_component_jumper.regex": "(?<=<x-)(?!slot)[a-z.-]+"
+} 
