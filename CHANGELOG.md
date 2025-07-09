@@ -1,6 +1,6 @@
 # Change Log
 
-## [v1.0.0](https://github.com/naoray/laravel-component-jumper/tree/v1.0.0) (2024-12-19)
+## [v1.0.0](https://github.com/naoray/laravel-component-jumper/tree/v1.0.0) (2025-07-09)
 **Added**
 - quick jump to Laravel components with `CTRL` + `click`
 - visual highlight of component links in `.blade` files
